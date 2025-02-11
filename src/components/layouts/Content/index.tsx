@@ -10,7 +10,7 @@ interface Props {
   children: any
 }
 
-const AContent = (props: Props) => {
+const HomePage = (props: Props) => {
   const { pathname } = useLocation()
   const { breadcrumbItems, pageInfos } = createBreadCrumb(
     routes,

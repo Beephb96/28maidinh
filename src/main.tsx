@@ -1,16 +1,25 @@
 import React from "react"
 import ReactDOM from "react-dom"
-//import "./assets/styles/index.scss"
+
 import "antd/dist/antd.css"
-import Header1 from "./components/layouts/AHeader/Header"
-import Banner from "./components/layouts/AHeader/Banner"
+import Header1 from "./components/layouts/Header"
+import Banner from "./components/layouts/Header/Banner"
 import Test from "./Test"
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import TestRedux from "./TestRedux"
+import Home from "./components/layouts/Home"
 
 ReactDOM.render(
   <React.StrictMode>
-    <Header1 />
-    {/* <Banner /> */}
+    <Provider store={store}>
+    {/* <Header1 />
+    <Banner />
     <Test />
+    <TestRedux />
+    </Provider> */}
+    <Home />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root"),
 )

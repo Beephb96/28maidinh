@@ -9,39 +9,29 @@ import "../../../assets/styles/home.less";
 const { Element } = BannerAnim;
 const { BgElement } = Element;
 
-interface BannerProps {
-  isMobile: boolean;
-}
-
-class Banner extends React.PureComponent<BannerProps> {
-  getDuration = (e: { key: string }): number => {
-    if (e.key === 'map') {
-      return 800;
-    }
-    return 1000;
-  };
+class Banner extends React.PureComponent {
 
   render() {
-    const { isMobile } = this.props;
     const bannerChildren = banner.map((item, i) => {
       const children = item.children.map((child, ii) => {
         const tag = child.tag === 'button' ? 'div' : child.tag || 'p';
-        const childrenToRender = child.tag === 'button' ?
-          <Button><a href={child.link} target="_blank" rel="noopener noreferrer">{child.children}</a></Button> :
+        const childrenToRender = child.tag === 'button' ? 
+          <Button><a href={child.link} target="_blank" rel="noopener noreferrer">{child.children}</a></Button> : 
           child.children;
-        
+
         return React.createElement(tag, {
           key: ii.toString(),
           className: child.className,
-          style: child.style || {}, 
+          style: child.style || {},
         }, childrenToRender);
       });
+
       return (
         <Element key={i.toString()}>
           <BgElement
             key="bg"
             className="banner-bg"
-            style={{ backgroundImage: `url(${isMobile ? item.imgMobile : item.img})` }}
+            style={{ backgroundImage: `url(${item.img})` }} 
           />
           {/* <QueueAnim
             key="text"
