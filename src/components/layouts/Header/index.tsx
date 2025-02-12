@@ -3,60 +3,56 @@ import logo from '../../../assets/img/Logo.png';
 import "../../../assets/styles/head.less";
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Menu, Row, Col, Button, Popover } from 'antd';
+import { Menu, Row, Col, Button} from 'antd';
 
 const searchEngine = 'Google';
 
-interface HeaderProps {
-  isFirstScreen: boolean;
-  isMobile: boolean;
-}
-
 interface HeaderState {
   menuVisible: boolean;
-  isScrolled: false; // Thêm state để theo dõi sự kiện cuộn
+  isScrolled: boolean;
 }
 
-export default class Header extends React.Component<HeaderProps, HeaderState> {
-  static propTypes = {
-    isFirstScreen: PropTypes.bool.isRequired,
-    isMobile: PropTypes.bool.isRequired,
-  };
-
+export default class Header extends React.Component<{},HeaderState> {
   state: HeaderState = {
     menuVisible: false,
+    isScrolled: false,
+  };
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = () => {
+    if (window.scrollY > 100) {
+      this.setState({ isScrolled: true });
+    } else {
+      this.setState({ isScrolled: false });
+    }
   };
 
   onMenuVisibleChange = (visible: boolean) => {
-    this.setState({
-      menuVisible: visible,
-    });
+    this.setState({ menuVisible: visible });
   };
 
   handleShowMenu = () => {
-    this.setState({
-      menuVisible: true,
-    });
+    this.setState({ menuVisible: true });
   };
 
   handleHideMenu = () => {
-    this.setState({
-      menuVisible: false,
-    });
-  };
-
-  handleSelectFilter = (value: string, option: { props: { [x: string]: any; }; }) => {
-    const optionValue = option.props['data-label'];
-    return optionValue === searchEngine || optionValue.indexOf(value.toLowerCase()) > -1;
+    this.setState({ menuVisible: false });
   };
 
   render() {
-    const { isFirstScreen, isMobile } = this.props;
-    const { menuVisible } = this.state;
-    const menuMode = isMobile ? 'inline' : 'horizontal';
+    const { menuVisible, isScrolled } = this.state;
+    const menuMode = 'horizontal';
+
     const headerClassName = classNames({
       clearfix: true,
-      'home-nav-white': !isFirstScreen,
+      'home-nav-white': isScrolled,
     });
 
     const menu = [
@@ -81,7 +77,7 @@ export default class Header extends React.Component<HeaderProps, HeaderState> {
 
     return (
       <header id="header" className={headerClassName}>
-        {menuMode === 'inline' && (
+        {/* {menuMode === 'inline' && (
           <Popover
             overlayClassName="popover-menu"
             placement="bottomRight"
@@ -91,7 +87,7 @@ export default class Header extends React.Component<HeaderProps, HeaderState> {
             arrowPointAtCenter
             onOpenChange={this.onMenuVisibleChange}
           />
-        )}
+        )} */}
         <Row>
           <Col lg={4} md={5} sm={24} xs={24}>
             <a id="logo">
