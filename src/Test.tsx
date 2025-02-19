@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "./redux/store";
+import { increment, decrement, incrementByAmount } from "./redux/counterSlice";
 
 const Test = () => {
-    const [count, setCount] = useState(0);
-    const [messages, setMessages] = useState<string[]>([]); // State lưu danh sách dòng chữ
-
+    const [effect, setEffect] = useState(0);
+      const count = useSelector((state: RootState) => state.counter.value);
+      const dispatch = useDispatch();
     useEffect(() => {
         console.log('Render useEffect')
-        setMessages((prevMessages) => [...prevMessages, `Count đã thay đổi: ${count}`]);
-    }, [count]); // useEffect chạy khi count thay đổi
+        setEffect(() => count / 2);
+    }, [count]);
 
     return (
         <div>
             {console.log('Render')}
-            <p>đã thêm {count} dòng</p>
-            <button onClick={() => setCount(count + 1)}>Thêm 1</button>
+            <h1>tao có {count} cái bánh</h1>
+                  <button onClick={() => dispatch(increment())}>+1</button>
+                  <button onClick={() => dispatch(decrement())}>-1</button>
+                  <button onClick={() => dispatch(incrementByAmount(5))}>+5</button>
 
             <div>
-                <h3>Lịch sử thay đổi:</h3>
-                {messages.map((msg, index) => (
-                    <p key={index}>{msg}</p>
-                ))}
+                <h1>số cái bánh khi thằng cờ hó đớp 1 nửa: {effect}</h1>
             </div>
         </div>
     );

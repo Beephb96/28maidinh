@@ -6,6 +6,8 @@ const LoginScreen = React.lazy(() => import("../pages/Auth/Login"))
 const Forbidden = React.lazy(() => import("../pages/Error/Forbidden"))
 const NotFound = React.lazy(() => import("../pages/Error/NotFound"))
 const Unauthorize = React.lazy(() => import("../pages/Error/Unauthorize"))
+const Home = React.lazy(() => import("../pages/Home"))
+
 
 //TODO Router Table
 const routes: IRoute[] = [
@@ -29,10 +31,10 @@ const routes: IRoute[] = [
   },
   {
     path: "/",
-    name: "Admin",
+    name: "Homepage",
     exact: false,
-    strict: true,
-    component: MainLayout,
+    // strict: true,
+    component: Home,
   },
   {
     path: "/login",

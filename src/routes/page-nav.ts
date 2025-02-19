@@ -1,69 +1,17 @@
-import React from "react"
-import IRoute from "../core/objects/IRoute"
+import React from "react";
+import { RouteObject } from "react-router-dom";
+import MainLayout from "../layouts/MainLayout";
+import Home from "../pages/Home";
 
-//! Pages
-const DashboardPage = React.lazy(() => import("../pages/Dashboard"))
-const ProfilePage = React.lazy(() => import("../pages/Profile"))
-
-//TODO Router Table
-const routes: IRoute[] = [
+const routes: RouteObject[] = [
   {
-    path: "",
-    name: "App",
-    redirect: "/menu-1",
-    hidden: true,
-  },
-  {
-    path: "/menu-1",
-    name: "Menu 1",
-    exact: true,
-    icon: "AndroidOutlined",
-    component: DashboardPage,
-  },
-  {
-    path: "/menu-2",
-    name: "Menu 2",
-    exact: true,
-    icon: "AppleOutlined",
-    redirect: "/menu-2-1",
+    path: '/',
+    element: <Mainlayout />,,
     children: [
       {
-        path: "/menu-2-1",
-        name: "Demo 2-1",
-        exact: true,
-        component: DashboardPage,
-      },
-      {
-        path: "/menu-2-2",
-        name: "Demo 2-2",
-        exact: true,
-        redirect: "/menu-2-2-1",
-        component: DashboardPage,
-        children: [
-          {
-            path: "/menu-2-2-1",
-            name: "Demo 2-2-1",
-            exact: true,
-            component: DashboardPage,
-            hidden: true,
-          },
-          {
-            path: "/menu-2-2-2",
-            name: "Demo 2-2-2",
-            exact: true,
-            component: DashboardPage,
-            hidden: true,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: ProfilePage,
-    hidden: true,
-  },
+        index: true,
+        element: <Home />
+      }
+    ]
+  }
 ]
-
-export default routes

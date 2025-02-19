@@ -1,44 +1,40 @@
-import React, { Suspense } from "react"
-import "./index.scss"
-import { Button, Layout } from "antd"
-import AContent from "../../components/layouts/Content"
-import AHeader from "../../components/layouts/Header"
-import ASidebar from "../../components/layouts/ASidebar"
-import { createProtectedRoute } from "../../core/helpers/route.helper"
-import { Redirect, Switch } from "react-router-dom"
-import routes from "../../routes/page-nav"
-import { createMenu } from "../../core/helpers/menu.helper"
+import React, { Suspense, useEffect, useState } from "react";
+import "./index.scss";
+import { Layout } from "antd";
+import { createProtectedRoute } from "../../core/helpers/route.helper";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import routes from "../../routes/default-nav";
+import Header from "../../components/layouts/Header";
+import Footer from "../../components/layouts/Footer";
+import LoadingComponent from "../../components/Spinloading";
+import Home from "../../pages/Home"; 
+import Login from "../../pages/Auth/Login";
 
-const { Footer } = Layout
+const { Content } = Layout;
 
-interface Props {}
+const MainLayout = () => {
+  const location = useLocation(); // Lấy thông tin route hiện tại
+  const [currentPath, setCurrentPath] = useState(location.pathname);
 
-const MainLayout = (props: Props) => {
+  useEffect(() => {
+    setCurrentPath(location.pathname);
+  }, [location.pathname]); // Khi pathname thay đổi, cập nhật state
+
   return (
-    <Layout>
-      <ASidebar icon="VXS Admin">
-        {routes.map((route, idx) => createMenu(route, idx, "/admin"))}
-      </ASidebar>
-
-      <Layout className="site-layout" style={{ marginLeft: 200 }}>
-        <AHeader />
-        <AContent>
-          <Suspense fallback={"lorem"}>
-            <Switch>
-              {routes.map((route, idx) => {
-                return createProtectedRoute(route, idx, "/admin")
-              })}
-              <Redirect to="/404" />
-            </Switch>
-          </Suspense>
-        </AContent>
-
-        <Footer style={{ textAlign: "center" }}>
-          VXS Admin &copy;{new Date().getFullYear()}
-        </Footer>
-      </Layout>
+    <Layout className="site-layout">
+      <Header />
+      <Content>
+        <Suspense fallback={<LoadingComponent />}>
+          <Routes>
+            {routes.map((route, idx) => (
+              <Route key={idx} path={route.path} element={<route.component />} />
+            ))}
+          </Routes>
+        </Suspense>
+      </Content>
+      <Footer />
     </Layout>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

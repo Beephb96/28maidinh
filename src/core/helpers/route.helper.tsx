@@ -1,56 +1,41 @@
-import React from "react"
-import { Redirect, Route } from "react-router-dom"
-import { isConnectedUser } from "../objects/Auth"
-import IRoute from "../objects/IRoute"
+import React from "react";
+import { Navigate, Route } from "react-router-dom";
+import { isConnectedUser } from "../objects/Auth";
+import IRoute from "../objects/IRoute";
 
-export const createRoute = (
-  route: IRoute,
-  ind: number,
-  parent: string = "",
-): any => {
-  let resultsRoutes: any[] = []
-  if (route.redirect && route.redirect.length > 0) {
-    resultsRoutes.push(
-      <Redirect
-        exact
-        from={`${parent}${route.path}`}
-        to={`${parent}${route.path}${route.redirect}`}
-      />,
-    )
-  }
+export const createRoute = (route: IRoute, ind: number, parent: string = "") => {
+  return (
+    <React.Fragment key={`fragment-${ind}`}>
+      {/* Xử lý điều hướng nếu có `redirect` */}
+      {route.redirect && route.redirect.length > 0 && (
+        <Route
+          key={`redirect-${ind}`}
+          path={`${parent}${route.path}`}
+          element={<Navigate to={`${parent}${route.path}${route.redirect}`} replace />}
+        />
+      )}
 
-  if (route.children && route.children.length > 0) {
-    resultsRoutes.push(
-      ...route.children.map((iRoute, idx) =>
-        createRoute(iRoute, idx, `${parent}${route.path}`),
-      ),
-    )
-  } else if (route.component) {
-    resultsRoutes.push(
-      <Route
-        key={ind}
-        exact={route.exact}
-        path={`${parent}${route.path}`}
-        render={(props) => <route.component {...props} />}
-      />,
-    )
-  }
-  return resultsRoutes
-}
+      {/* Nếu có `children`, tạo các route con */}
+      {route.children &&
+        route.children.map((iRoute, idx) => createRoute(iRoute, idx, `${parent}${route.path}`))}
 
-export const createProtectedRoute = (
-  route: IRoute,
-  ind: number,
-  parent: string = "",
-): any => {
-  let resultsRoutes: any[] = []
+      {/* Nếu có `component`, tạo route bình thường */}
+      {route.component && (
+        <Route key={ind} path={`${parent}${route.path}`} element={<route.component />} />
+      )}
+    </React.Fragment>
+  );
+};
 
+export const createProtectedRoute = (route: IRoute, ind: number, parent: string = "") => {
   if (!isConnectedUser()) {
-    resultsRoutes.push(
-      <Redirect exact from={`${parent}${route.path}`} to={`/401`} />,
-    )
-    return resultsRoutes
+    return (
+      <Route
+        key={`protected-${ind}`}
+        path={`${parent}${route.path}`}
+        element={<Navigate to="/401" replace />}
+      />
+    );
   }
-
-  return createRoute(route, ind, parent)
-}
+  return createRoute(route, ind, parent);
+};

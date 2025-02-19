@@ -7,8 +7,8 @@ function Footer() {
   return (
     <footer id="footer" className="dark">
       <div className="footer-wrap">
-        <Row>
-          <Col lg={6} sm={24} xs={24}>
+      <Row gutter={[16, 16]}>
+          <Col lg={6} sm={12} xs={12}>
             <div className="footer-center">
               <h2>HELLO</h2>
               <div>
@@ -26,7 +26,7 @@ function Footer() {
               </div>
             </div>
           </Col>
-          <Col lg={6} sm={24} xs={24}>
+          <Col lg={6} sm={12} xs={12}>
             <div className="footer-center">
               <h2>A DIU Ô CÊ</h2>
               <div>
@@ -36,7 +36,7 @@ function Footer() {
               </div>
             </div>
           </Col>
-          <Col lg={6} sm={24} xs={24}>
+          <Col lg={6} sm={12} xs={12}>
             <div className="footer-center">
               <h2>XIN CHÀO</h2>
               <div>
@@ -46,7 +46,7 @@ function Footer() {
               </div>
             </div>
           </Col>
-          <Col lg={6} sm={24} xs={24}>
+          <Col lg={6} sm={12} xs={12}>
             <div className="footer-center">
               <h2>
                 <img className="title-icon" src={logo} alt="" />
@@ -95,7 +95,7 @@ function Footer() {
               b
             </a>
           </span>
-          <span style={{ marginRight: 12 }}>VSX TECHNOLOGY</span>
+          <span style={{ marginRight: 12 }}>VXS TECHNOLOGY</span>
           <span style={{ marginRight: 12 }}>Copyright © {new Date().getFullYear()}</span>
         </Col>
       </Row>

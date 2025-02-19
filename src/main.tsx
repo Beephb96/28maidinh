@@ -1,26 +1,20 @@
-import React from "react"
-import ReactDOM from "react-dom"
-
-import "antd/dist/antd.css"
-import Header1 from "./components/layouts/Header"
-import Banner from "./components/layouts/Header/Banner"
-import Test from "./Test"
+import React from "react";
+import ReactDOM from "react-dom";
+// import "./assets/styles/index.scss"
+import "antd/dist/antd.css";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { store } from "./redux/store";
-import TestRedux from "./TestRedux"
-import Home from "./components/layouts/Home"
+import MainLayout from "./layouts/MainLayout";
+import Login from "./pages/Auth/Login";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-    {/* <Header1 />
-    <Banner />
-    <Test />
-    <TestRedux />
-    </Provider> */}
-    <Home />
+      <BrowserRouter>
+        <MainLayout />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  document.getElementById("root"),
-)
-  
+  document.getElementById("root")
+);
