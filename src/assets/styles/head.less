@@ -1,9 +1,9 @@
 @import './default.less';
-@header-height: 80px;
+@header-height: 60px;
 #header {
   position: fixed;
   z-index: 999;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(107, 0, 0, 0.25);
   border-bottom: 1px solid transparent;
   transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
   height: @header-height;
@@ -29,14 +29,14 @@
 
 #logo {
   float: left;
-  height: 80px;
-  line-height: 80px;
+  height: 60px;
+  line-height: 60px;
 }
 
 #logo img {
-  height: 60px;
-  line-height: 80px;
-  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  width: 70px;
   margin-right: 8px;
 }
 
@@ -115,7 +115,7 @@
   &.ant-select-dropdown {
     border: 0;
     border-radius: 0;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25); 
     font-size: 14px;
   }
   .ant-select-dropdown-menu {

@@ -1,61 +1,28 @@
-import 'rc-banner-anim/assets/index.css';
-import React from 'react';
-import QueueAnim from 'rc-queue-anim';
-import BannerAnim from 'rc-banner-anim';
-import { Button } from 'antd';
-import { banner } from '../../../data';
-import "../../../assets/styles/home.less";
+import React, { ReactNode } from "react";
+import { FacebookOutlined, PhoneOutlined, InstagramOutlined } from '@ant-design/icons';
+import "../../../assets/styles/banner.css";
+import backgourdImg from "../../../assets/img/banner.png";
 
-const { Element } = BannerAnim;
-const { BgElement } = Element;
-
-class Banner extends React.PureComponent {
-
-  render() {
-    const bannerChildren = banner.map((item, i) => {
-      const children = item.children.map((child, ii) => {
-        const tag = child.tag === 'button' ? 'div' : child.tag || 'p';
-        const childrenToRender = child.tag === 'button' ? 
-          <Button><a href={child.link} target="_blank" rel="noopener noreferrer">{child.children}</a></Button> : 
-          child.children;
-
-        return React.createElement(tag, {
-          key: ii.toString(),
-          className: child.className,
-          style: child.style || {},
-        }, childrenToRender);
-      });
-
-      return (
-        <Element key={i.toString()}>
-          <BgElement
-            key="bg"
-            className="banner-bg"
-            style={{ backgroundImage: `url(${item.img})` }} 
-          />
-          {/* <QueueAnim
-            key="text"
-            className={item.className}
-            ease={['easeOutCubic', 'easeInQuad']}
-            type={item.queueAnim || 'bottom'}
-          >
-            {children}
-          </QueueAnim> */}
-        </Element>
-      );
-    });
-
-    return (
-      <div className="banner page-wrapper">
-        <div className="page">
-          {/* <div className="logo" /> */}
-          <BannerAnim type="across" duration={550} ease="easeInOutQuint">
-            {bannerChildren}
-          </BannerAnim>
-        </div>
+const Banner = () => {
+  return (
+    <div className="bg">
+      <img alt="banner" src={backgourdImg} />
+      <div className="button-group">
+        {actionButton("Facebook", <FacebookOutlined />)}
+        {actionButton("Zalo", <PhoneOutlined />)}
+        {actionButton("Instagram", <InstagramOutlined />)}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+const actionButton = (text: string, icon: ReactNode) => (
+  <button className="action-btn">
+    <div className="action-btn-inner">
+      <div className="action-btn-front">{text}</div>
+      <div className="action-btn-back">{icon}</div>
+    </div>
+  </button>
+);
 
 export default Banner;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import "../../../assets/styles/footer.less";
-import logo from '../../../assets/img/Logo.png';
+import logo from '../../../assets/img/LogoLight.png';
 
 function Footer() {
   return (
